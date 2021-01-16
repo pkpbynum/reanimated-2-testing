@@ -1,12 +1,12 @@
-import {AppRegistry, Platform} from 'react-native';
-import {name as appName} from './app.json';
-import App from './Screen';
+import {AppRegistry, Platform} from 'react-native'
+import {name as appName} from './app.json'
+import Navigator from './src/Navigator'
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => Navigator)
 
 if (Platform.OS === 'web') {
-  const rootTag = document.getElementById('root');
-  AppRegistry.runApplication(appName, {rootTag});
+  const rootTag = document.getElementById('root')
+  AppRegistry.runApplication(appName, {rootTag})
 }
 
-export default App;
+export default Navigator
