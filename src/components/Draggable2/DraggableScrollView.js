@@ -35,71 +35,43 @@ export default React.forwardRef(function DraggableScrollView(
   },
   ref,
 ) {
-  console.log('rerender')
   const ids = useSharedValue(children.map((child) => child.props.id))
   const dragId = useSharedValue(-1)
   const dragValue = useSharedValue(0)
+  // const test = useSharedValue(0)
   const initialized = useSharedValue(false)
-  const test = useSharedValue(0)
   const scrollViewLayout = useSharedValue({absoluteY: 0})
-  const offsets = useRef({})
-
   const getState = useRef(
     (() => {
       'worklet'
-      const sharedObj = {
-        // ids,
-        dragId: {value: -1},
-        // dragValue,
-        // itemHeight,
-        // initialized,
-        // scrollViewLayout,
-        generateDragStyle,
-        generateGestureHandler,
+      const mutableObj = {
+        ids,
+        dragId,
+        dragValue,
+        initialized,
+        scrollViewLayout,
+        offsets: {},
       }
       return () => {
         'worklet'
-        return sharedObj
+        return mutableObj
       }
     })(),
   ).current
 
-  const manager = useRef(
-    new DraggableViewManager(
-      ids,
-      dragId,
-      dragValue,
-      itemHeight,
-      offsets,
-      children.length,
-      scrollViewLayout,
-      initialized,
-    ),
-  ).current
-
-  // console.log(
-  //   (() => {
-  //     'worklet'
-  //     const o = getOffsets()
-  //     o[test.value] = test.value
-  //     test.value = test.value + 1
-  //     console.log(o)
-  //   })(),
-  // )
-
   useImperativeHandle(ref, () => ({
     getOrderedIds: () => getState().ids.value,
-    test: () => {
-      offsets[test.value] = test
-      test.value = test.value + 1
-      console.log(offsets)
-    },
+    // test: () => {
+    //   'worklet'
+    //   const offsets = getState().offsets
+    //   offsets[test.value] = test
+    //   test.value = test.value + 1
+    //   console.log(offsets)
+    // },
   }))
 
   const extraProps = {
-    manager,
     getState,
-    offsets,
   }
 
   return (

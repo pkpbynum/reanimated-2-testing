@@ -7,7 +7,7 @@ import Home from './Home'
 import screens from './screens'
 import {ToastProvider} from './components/Toaster'
 
-const { height: SCREEN_HEIGHT} = Dimensions.get('window')
+const {height: SCREEN_HEIGHT} = Dimensions.get('window')
 const Stack = createSharedElementStackNavigator()
 
 export default function Navigator() {
@@ -40,6 +40,7 @@ export default function Navigator() {
                   }),
                 },
               }),
+              gestureEnabled: false,
               gestureResponseDistance: {
                 vertical: SCREEN_HEIGHT,
               },

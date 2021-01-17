@@ -4,7 +4,7 @@ import Dropdown from './screens/Dropdown'
 import HorizontalPaging from './screens/HorizontalPaging'
 import Image from './screens/Image'
 import Input from './screens/Input'
-import SVG from './screens/SVG'
+import Closure from './screens/Closure'
 import Toast from './screens/Toast'
 
 export default [
@@ -33,8 +33,8 @@ export default [
     component: Input,
   },
   {
-    title: 'SVG',
-    component: SVG,
+    title: 'Closure',
+    component: Closure,
   },
   {
     title: 'Toast',

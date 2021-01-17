@@ -1,34 +1,35 @@
 import React, {useEffect} from 'react'
 import Animated, {useSharedValue} from 'react-native-reanimated'
 import {LongPressGestureHandler} from 'react-native-gesture-handler'
-import {Dimensions} from 'react-native'
-import {useLayoutEffect} from 'react'
-
-const {height: SCREEN_HEIGHT} = Dimensions.get('window')
+import {onDraggableLayout} from './utils'
 
 export default function Draggable({
   children,
   index,
   id,
-  extraProps: {manager},
+  extraProps: {manager, getState, offsets},
 }) {
   const animating = useSharedValue(false)
   const offset = useSharedValue(index * manager.itemHeight)
 
-  const gestureHandler = manager._generateGestureHandler(id, offset, animating)
+  const gestureHandler = getState().generateGestureHandler(
+    id,
+    offset,
+    animating,
+    offsets,
+  )
 
-  const dragStyle = manager._generateDragStyle(id, offset, animating)
+  const dragStyle = getState().generateDragStyle(id, offset, animating)
 
   useEffect(() => {
-    console.log('item layout')
-    manager._onDraggableLayout(id, index, offset)
+    onDraggableLayout(id, index, offset, offsets)
   }, [])
 
   return (
     <Animated.View style={dragStyle}>
       <LongPressGestureHandler
         minDurationMs={200}
-        maxDist={SCREEN_HEIGHT}
+        maxDist={Number.MAX_SAFE_INTEGER}
         onGestureEvent={gestureHandler}
       >
         <Animated.View>{children}</Animated.View>

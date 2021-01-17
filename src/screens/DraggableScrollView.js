@@ -1,20 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useMemo, useRef} from 'react'
 import {View, Text, Button, StyleSheet} from 'react-native'
 import ScreenWrapper from '../components/ScreenWrapper'
 
-import DraggableList from '../components/Draggable/DraggableScrollView'
-import {useRef} from 'react'
+import DraggableList from '../components/Draggable2/DraggableScrollView'
+import {useSharedValue} from 'react-native-reanimated'
+import useMutableObject from '../../lib/useMutableObject'
 
 const styles = StyleSheet.create({
   item: {
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  grip: {
-    height: 30,
-    width: 50,
-    backgroundColor: 'white',
   },
 })
 
@@ -42,10 +38,7 @@ export default function DraggableScrollView() {
         }
         title="Add Items"
       />
-      <Button
-        onPress={() => console.log(draggable.current.getOrderedIds())}
-        title="Print IDs"
-      />
+      <Button onPress={() => draggable.current.test()} title="Print IDs" />
       <DraggableList ref={draggable} itemHeight={50}>
         {state.map((item) => (
           <View
